@@ -8,22 +8,66 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [task, setTask] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [input, setInput] = useState('');
+  const [id, setID] = useState(null);
 
-  function addTask(value) {
+  function handleDelete(id) {
+    const filteredTasks = task.filter((todo) => todo.id !== id);
+    setTask(filteredTasks);
+  }
+
+  function isFound(value) {
     let found = task.find((taskItem) => taskItem.name === value);
+    return found;
+  }
 
-    if (value !== '' && !found) {
-      setTask([...task, { name: value, id: uuidv4() }]);
+  function handleEdit(id, newText) {
+    if (newText !== '' && !isFound(newText)) {
+      const updatedTodos = task.map((todo) =>
+        todo.id === id ? { ...todo, name: newText } : todo
+      );
+      setTask(updatedTodos);
     }
   }
 
-  console.log(task);
+  function addTask(value) {
+    if (value !== '' && !isFound(value)) {
+      setTask([...task, { name: value, id: uuidv4(), done: false }]);
+    }
+  }
+  function toggleDone(id, value) {
+    const updatedTodos = task.map((todo) =>
+      todo.id === id ? { ...todo, done: value } : todo
+    );
+    setTask(updatedTodos);
+  }
+
+  // console.log(task);
   return (
     <div style={{ backgroundColor: '#0d0d0d' }} className=" w-100 vh-100">
       <Navbar />
       <Header task={task} />
-      <Input addTask={addTask} />
-      <Todolist task={task} />
+      <Input
+        input={input}
+        setInput={setInput}
+        addTask={addTask}
+        task={task}
+        handleEdit={handleEdit}
+        edit={edit}
+        setEdit={setEdit}
+        id={id}
+      />
+      <Todolist
+        task={task}
+        input={input}
+        setInput={setInput}
+        handleEdit={handleEdit}
+        setEdit={setEdit}
+        setID={setID}
+        handleDelete={handleDelete}
+        toggleDone={toggleDone}
+      />
     </div>
   );
 }

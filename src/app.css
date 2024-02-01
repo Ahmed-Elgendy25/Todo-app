@@ -29,4 +29,19 @@
   width: 2%;
   padding: 20px;
   border: 3px solid #ff5531;
+  cursor: pointer;
+}
+
+#circleListGreen {
+  border-radius: 50%;
+  width: 2%;
+  padding: 20px;
+  border: 3px solid #57cb4c;
+  background-color: #57cb4c;
+  cursor: pointer;
+}
+
+.done {
+  text-decoration: line-through;
+  text-decoration-thickness: 4px;
 }

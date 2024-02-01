@@ -28,7 +28,9 @@ function Header({ task }) {
             className="circle d-flex justify-content-center align-items-center"
             style={{ backgroundColor: '#ff5531' }}
           >
-            <span className="fw-bolder fs-1 text-black">1/{task.length}</span>
+            <span className="fw-bolder fs-1 text-black">
+              {task.filter((todo) => todo.done == true).length}/{task.length}
+            </span>
           </div>
         ) : (
           ''

@@ -1,9 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
 
-function Input({ addTask }) {
-  const [input, setInput] = useState('');
-
+function Input({
+  setInput,
+  addTask,
+  input,
+  task,
+  id,
+  handleEdit,
+  edit,
+  setEdit,
+}) {
   return (
     <div className="  w-50 mx-auto mt-5">
       <div className=" container ">
@@ -17,14 +23,42 @@ function Input({ addTask }) {
                 placeholder="write your next task"
                 aria-label=".form-control-lg example"
                 onChange={(e) => setInput(e.target.value)}
+                value={input}
               />
-              <button
-                className="btn btn-md fs-4 rounded-circle fw-bolder px-3  ms-3 "
-                style={{ backgroundColor: '#ff5531' }}
-                onClick={() => addTask(input)}
-              >
-                &#43;
-              </button>
+
+              {edit ? (
+                <>
+                  <button
+                    className="btn btn-md fs-4 rounded-circle fw-bolder px-3  ms-3 "
+                    style={{ backgroundColor: '#ff5531' }}
+                    onClick={() => {
+                      handleEdit(id, input);
+                      setEdit(false);
+                    }}
+                  >
+                    &#10003;
+                  </button>
+
+                  <button
+                    className="btn btn-md fs-4 rounded-circle fw-bolder px-3  ms-3 "
+                    style={{ backgroundColor: '#ff5531' }}
+                    onClick={() => setEdit(false)}
+                  >
+                    &#10005;
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="btn btn-md fs-4 rounded-circle fw-bolder px-3  ms-3 "
+                  style={{ backgroundColor: '#ff5531' }}
+                  onClick={() => {
+                    addTask(input);
+                    setInput('');
+                  }}
+                >
+                  &#43;
+                </button>
+              )}
             </div>
           </div>
         </div>
